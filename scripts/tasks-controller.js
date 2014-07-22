@@ -57,6 +57,16 @@ tasksController = function() {
           clearTask();
         });
 
+        //Complete method
+        $(taskPage).findById('task', $(evt.target).data().taskId, function(task) {
+          storageEngine.findById('task', $(evt.target).data().taskId, function(task) {
+            task.complete = true;
+            storageEngine.save('task',task, function() {
+              tasksController.loadTasks();
+            }, errorLogger);
+          }, errorLogger);
+        });
+
         //Edit method
         $(taskPage).find('#tblTasks tbody').on('click', '.editRow', function(evt) {
           $(taskPage).find('#taskCreation').removeClass('not');
