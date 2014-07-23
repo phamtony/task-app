@@ -122,14 +122,16 @@ if (window.indexedDB) {
 
 <script id="taskRow" type="text/x-jQuery-tmpl">
 <tr>
-	<td>${task}</td>
-	<td><time datetime="${requiredBy}"> ${requiredBy}</time></td>
-	<td>${category}</td>
+	<td {{if complete == true}} class="taskCompleted" {{/if}}>${task}</td>
+	<td {{if complete == true}} class="taskCompleted" {{/if}}><time datetime="${requiredBy}"> ${requiredBy}</time></td>
+	<td {{if complete == true}} class="taskCompleted" {{/if}}>${category}</td>
 	<td>
 		<nav>
-			<a href="#" class="editRow" data-task-id="${id}">Edit</a>
-			<a href="#" class="completeRow" data-task-id="${id}">Complete</a>
-			<a href="#" class="deleteRow" data-task-id="${id}">Delete</a>
+			{{if complete != true}}
+				<a href="#" class="editRow" data-task-id="${id}">Edit</a>
+				<a href="#" class="completeRow" data-task-id="${id}">Complete</a>
+			{{/if}}	
+				<a href="#" class="deleteRow" data-task-id="${id}">Delete</a>
 		</nav>
 	</td>
 </tr>

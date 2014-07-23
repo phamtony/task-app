@@ -58,12 +58,12 @@ tasksController = function() {
         });
 
         //Complete method
-        $(taskPage).findById('task', $(evt.target).data().taskId, function(task) {
+        $(taskPage).find('#tblTasks tbody').on('click', '.completeRow', function(evt) {           
           storageEngine.findById('task', $(evt.target).data().taskId, function(task) {
             task.complete = true;
-            storageEngine.save('task',task, function() {
+            storageEngine.save('task', task, function() {
               tasksController.loadTasks();
-            }, errorLogger);
+            },errorLogger);
           }, errorLogger);
         });
 
@@ -103,12 +103,19 @@ tasksController = function() {
 		},
 
     loadTasks : function() {
+      $(taskPage).find('#tblTasks tbody').empty();
       storageEngine.findAll('task', function(tasks) {
-        $.each(tasks, function(index, task) {
-          $('#taskRow').tmpl(task).appendTo($(taskPage).find('#tblTasks tbody'));
+        tasks.sort(function(o1, o2) {
+          return Date.parse(o1.requiredBy).compareTo(Date.parse(o2.requiredBy));
         });
-        taskCountChanged();
-        renderTable();
+        $.each(tasks, function(index, task) {
+          if (!task.complete) {
+            task.complete = false;
+          }
+          $('#taskRow').tmpl(task).appendTo($(taskPage).find('#tblTasks tbody'));
+          taskCountChanged();
+          renderTable();
+        });
       }, errorLogger);
     }
 
