@@ -51,6 +51,9 @@ tasksController = function() {
           $(evt.target).closest('td').siblings().andSelf().toggleClass('rowHighlight');
         }); 
 
+        //CSV import
+        $('#importFile').change(loadFromCSV);
+
         //Clear task
         $(taskPage).find('#clearTask').click(function(evt) {
           evt.preventDefault();
