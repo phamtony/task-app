@@ -1,2 +1,2 @@
 # Task App
-## Tasks App - like a todo app. - by Dane
+## Tasks App - like a todo app - by Dane
